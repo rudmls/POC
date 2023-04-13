@@ -1,0 +1,18 @@
+plugins:
+- authentication-tokens.jpi
+
+bouncycastle-api.jpi
+caffeine-api.jpi
+cloudbees-bitbucket-branch-source.jpi
+handy-uri-templates-2-api.jpi
+javax-activation-api.jpi
+javax-mail-api.jpi
+jaxb.jpi
+mina-sshd-api-common.jpi
+mina-sshd-api-core.jpi
+pipeline-model-api.jpi
+pipeline-model-extensions.jpi
+script-security.jpi
+sse-gateway.jpi
+sshd.jpi
+workflow-basic-steps.jpi

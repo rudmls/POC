@@ -1,0 +1,10 @@
+---
+
+- name: Unnstall Jenkins
+  hosts: localhost
+  connection: local
+  become: true
+  roles:
+    - { role: uninstall, tags: uninstall }
+  vars_files:
+    - vars/main.yml

@@ -1,0 +1,9 @@
+---
+
+gitlab_users: 
+  - { username: "ruddy.monlouis", name: "Ruddy Monlouis", email: "ruddy.monlouis@example.com", password: "password" }
+
+gitlab_root_password: password
+gitlab_offline_repo_path: /data/repo/gitlab_gitlab-ce
+
+gitlab_default_theme: '2'

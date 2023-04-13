@@ -1,0 +1,47 @@
+---
+
+- name: Add Gitlab yum repo conf file
+  template:
+    src: gitlab_gitlab-ce.repo.j2
+    dest: /etc/yum.repos.d/gitlab_gitlab-ce.repo
+
+- name: Install packages
+  dnf:
+    name: 
+      - gitlab-ce
+    state: present
+    update_cache: true   
+
+- name: Reconfigure GitLab (first run)
+  command: gitlab-ctl reconfigure
+  args:
+    creates: /var/opt/gitlab/bootstrapped
+
+# - name: install pexpect
+#   pip:
+#     name: pexpect
+
+# - name: Change root password
+#   expect:
+#     command: gitlab-rake "gitlab:password:reset[root]"
+#     responses:
+#       (?i)password: "{{ gitlab_root_password }}"
+
+- name: Use the rails console to change root password
+  command: |
+    gitlab-rails runner "user = User.where(id:1).first; 
+    user.password = '{{ gitlab_root_password }}'; 
+    user.password_confirmation = '{{ gitlab_root_password }}'; 
+    user.save!"
+  # tags: debug
+
+- name: Use the rails console to create user
+  command: |
+    gitlab-rails runner 
+    "user = User.new(username: '{{ item.username }}', email: '{{ item.email }}', name: '{{ item.name }}', password: '{{ item.password }}', password_confirmation: '{{ item.password }}');
+    user.skip_confirmation!;
+    user.save!"
+  loop: "{{ gitlab_users }}"
+  tags: debug
+
+

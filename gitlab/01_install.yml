@@ -1,0 +1,10 @@
+---
+
+- name: Install Jenkins
+  hosts: localhost
+  connection: local
+  become: true
+  roles:
+    - { role: install, tags: install }
+  vars_files:
+    - vars/main.yml

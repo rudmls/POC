@@ -1,0 +1,43 @@
+---
+
+- name: Install online jenkins repo
+  block:
+
+    - name: Download Long Term Jenkins release
+      get_url:
+        url: https://pkg.jenkins.io/redhat-stable/jenkins.repo
+        dest: /etc/yum.repos.d/jenkins.repo
+
+    - name: Import jenkins key from url
+      rpm_key:
+        state: present
+        key: https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+
+  when: "jenkins_install_mode == 'online'"
+
+- name: Install offline jenkins repo
+  block:
+
+    - name: Create repo directory
+      file: 
+        path: "{{ jenkins_offline_repo_path }}"
+        state: directory
+
+    - name: Copy Jenkins package in repo
+      copy:
+        src: "jenkins-2.387.2-1.1.noarch.rpm"
+        dest: "{{ jenkins_offline_repo_path }}"
+
+    - name: Create local repo
+      shell: createrepo .
+      args:
+        chdir: "{{ jenkins_offline_repo_path }}"
+
+    - name: Copy Jenkins yum repo conf file
+      template:
+        src: jenkins.repo.j2
+        dest: /etc/yum.repos.d/jenkins.repo
+
+  when: "jenkins_install_mode == 'offline'"
+
+

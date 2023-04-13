@@ -1,0 +1,37 @@
+---
+
+jenkins_install_mode: offline # true/false
+
+jenkins_offline_repo_path: /data/repo/jenkins
+jenkins_yum_conf_file: /etc/
+
+jenkins_admin_username: admin
+jenkins_admin_password: admin
+
+jenkins_process_user: jenkins
+jenkins_process_group: "{{ jenkins_process_user }}"
+
+jenkins_home: /var/lib/jenkins
+jenkins_hostname: localhost
+jenkins_http_port: 8181
+jenkins_jar_location: /opt/jenkins-cli.jar
+jenkins_url_prefix: ""
+jenkins_options: ""
+jenkins_java_options: "-Djenkins.install.runSetupWizard=false"
+
+jenkins_plugins: []
+
+jenkins_init_changes:
+  - option: "JENKINS_OPTS"
+    value: "{{ jenkins_options }}"
+  # - option: "JAVA_OPTS"
+  #   value: "{{ jenkins_java_options }}"
+  # - option: "JENKINS_HOME"
+  #   value: "{{ jenkins_home }}"
+  # - option: "JENKINS_PREFIX"
+  #   value: "{{ jenkins_url_prefix }}"
+  # - option: "JENKINS_PORT"
+  #   value: "{{ jenkins_http_port }}"
+
+jenkins_init_folder: "/etc/systemd/system/jenkins.service.d"
+jenkins_init_file: "{{ jenkins_init_folder }}/override.conf"

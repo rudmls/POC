@@ -1,0 +1,10 @@
+---
+
+- import_tasks: 01_jenkins_repo.yml
+  tags: jenkins_repo
+
+- import_tasks: 02_dependencies.yml
+  tags: dependencies
+
+- import_tasks: 03_settings.yml
+  tags: settings

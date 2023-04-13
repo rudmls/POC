@@ -1,0 +1,69 @@
+---
+
+- name: Install packages
+  dnf:
+    name: 
+      - jenkins
+      - java-11-openjdk
+    state: present
+    update_cache: true    
+
+- name: Ensure jenkins is started
+  service:
+    name: jenkins
+    state: started
+
+
+# - name: Create repo directory
+#   file: 
+#     path: "{{ localrepo_path }}"
+#     state: directory
+
+# - name: Copy Jenkins package in repo
+#   copy:
+#     src: "jenkins-2.387.2-1.1.noarch.rpm"
+#     dest: "{{ localrepo_path }}"
+
+# - name: Create local repo
+#   shell: createrepo .
+#   args:
+#     chdir: "{{ localrepo_path }}"
+
+# - name: Copy local repo conf
+#   template:
+#     src: local.repo
+#     dest: /etc/yum.repos.d/local.repo
+
+# - name: Install java
+#   yum:
+#     name: java-11-openjdk
+#     state: present
+
+# - name: Import jenkins key from url
+#   rpm_key:
+#     state: present
+#     key: /data/jenkins.io-2023.key 
+
+# - name: Install jenkins
+#   yum:
+#     name: jenkins
+#     state: present
+
+# - name: configure default users
+#   template:
+#     src: basic-security.groovy.j2
+#     dest: "{{ jenkins_home }}/init.groovy.d/basic-security.groovy"
+#     owner: "{{ jenkins_process_user }}"
+#     group: "{{ jenkins_process_group }}"
+#     mode: 0775
+#   register: jenkins_users_config
+
+# - name: Ensure jenkins is started
+#   service:
+#     name: jenkins
+#     state: started
+
+# - name: Import jenkins key from url
+#   ansible.builtin.rpm_key:
+#     state: present
+#     key: jenkins.io.key
